@@ -13,11 +13,15 @@ class Promify:
     def promify(self):
         """Dispatch the correct formatting function"""
         if 'group_field' in self.query:
-            return self.promify_group_count()
+            if self.query['type'] == 'gauge':
+                return self.promify_grouped_gauge()
+        else:
+            if self.query['type'] == 'counter':
+                return self.promify_counter()
         raise ValueError
 
-    def promify_group_count(self):
-        """Counter of grouped data"""
+    def promify_grouped_gauge(self):
+        """Guages of grouped data"""
         group_field = self.query['group_field']
         counts = {}
         for item in self.data:
@@ -30,4 +34,11 @@ class Promify:
             self.output += f"""{self.query['name']}{{{group_field}="{field}"}} {counts[field]}
 """
 
+        return self.output
+
+    def promify_counter(self):
+        """Simple counter"""
+        count = len(self.data)
+        self.output += f"""{self.query['name']} {count}
+"""
         return self.output

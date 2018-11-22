@@ -16,13 +16,16 @@ def main():
         usage()
         sys.exit(1)
 
+    output = ""
     bzex = prombzex.PromBZEx(sys.argv[1])
     for server in bzex.servers():
         bzserver = bzex.server(server)
 
         for query in bzserver.query_names():
             print("Running: %s..." % query)
-            print(bzserver.run_query(query))
+            output += bzserver.run_query(query)
+
+    print(output)
 
 
 if __name__ == '__main__':
