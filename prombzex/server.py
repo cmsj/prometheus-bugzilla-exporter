@@ -2,6 +2,8 @@
 from simple_rest_client.api import API
 from simple_rest_client.resource import Resource
 
+from . import promify
+
 
 class BugzillaResource(Resource):
     """Class to define the custom REST endpoints we want"""
@@ -18,8 +20,6 @@ class BZServer:
 
         self.base_url = base_url
         self.name = data["name"]
-        self.type = data["type"]
-        self.help = data["help"]
         self.api_key = data["api_key"]
         self.queries = data["queries"]
 
@@ -49,4 +49,9 @@ class BZServer:
         for param in query_data["params"]:
             params[param["key"]] = param["value"]
         response = self.bugzilla.bz.search(params=params)
-        return (response.status_code, response.url, response.body)
+
+        if response.status_code != 200:
+            raise ValueError(response.body)
+
+        prom = promify.Promify(query_data, response.body['bugs'])
+        return prom.promify()
