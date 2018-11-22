@@ -16,8 +16,10 @@ class BZServer:
         self.config = config
         data = self.config.server(base_url)
 
-        self.name = data["name"]
         self.base_url = base_url
+        self.name = data["name"]
+        self.type = data["type"]
+        self.help = data["help"]
         self.api_key = data["api_key"]
         self.queries = data["queries"]
 
