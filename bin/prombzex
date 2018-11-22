@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
+"""Prometheus Bugzilla Exporter"""
 
-import prombzex
 import sys
+from prombzex import prombzex
 
 
 def usage():
+    """Print program usage"""
     print("Usage: %s CONFIGFILE", sys.argv[0])
 
 
 def main():
+    """Main entrypoint"""
     if len(sys.argv) != 2:
         usage()
         sys.exit(1)
+
+    bzex = prombzex.PromBZEx(sys.argv[1])
+    for server in bzex.servers():
+        bzserver = bzex.server(server)
+
+        for query in bzserver.query_names():
+            print("Running: %s..." % query)
+            print(bzserver.run_query(query))
 
 
 if __name__ == '__main__':

@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 """Configuration for Prombzex"""
 
-import configparser
+import json
 
 
-class PrombzexConfig:
-    """This class abstracts the INI config file. Its format is:
-    [DEFAULT]
-    Foo = bar
-
-    [some.bugzilla.server.com]
-    Baz = Bing"""
+class PromBZExConfig:
+    """This class abstracts the json config file. Its format is:
+    TODO: document the format"""
 
     data = None
 
     def __init__(self, config_path):
         """Initialise the class and load the config"""
-        self.data = configparser.ConfigParser()
-        self.data.read(config_path)
+        with open(config_path, 'r') as filep:
+            self.data = json.load(filep)
 
     def servers(self):
         """Return a list of configured BZ servers"""
-        return self.data.sections()
+        return list(filter(lambda x: x != "default", self.data.keys()))
 
-    def get(self, key, server=None):
+    def server(self, name):
+        """Return the data for a server"""
+        return self.data[name]
+
+    def get(self, key, server=None, allow_default=True):
         """Return a config value for a given key, optionally for a
         specific server. If no server is specified, the default
         value is returned. If a server is specified, its value is
@@ -34,7 +34,8 @@ class PrombzexConfig:
 
         value = None
 
-        if key in self.data['DEFAULT']:
+        if allow_default and 'DEFAULT' in self.data and \
+                key in self.data['DEFAULT']:
             value = self.data['DEFAULT'][key]
 
         if server and key in self.data[server]:
