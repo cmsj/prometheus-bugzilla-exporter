@@ -20,4 +20,4 @@ class PromBZEx:
 
     def server(self, name):
         """Return an instance of BZServer"""
-        return server.BZServer(name, self.config.server(name))
+        return server.BZServer(name, self.config)

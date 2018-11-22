@@ -34,9 +34,9 @@ class PromBZExConfig:
 
         value = None
 
-        if allow_default and 'DEFAULT' in self.data and \
-                key in self.data['DEFAULT']:
-            value = self.data['DEFAULT'][key]
+        if allow_default and 'default' in self.data and \
+                key in self.data['default']:
+            value = self.data['default'][key]
 
         if server and key in self.data[server]:
             value = self.data[server][key]
