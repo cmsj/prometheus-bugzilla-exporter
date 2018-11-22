@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+import prombzex
+import sys
+
+
+def usage():
+    print("Usage: %s CONFIGFILE", sys.argv[0])
+
+
+def main():
+    if len(sys.argv) != 2:
+        usage()
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
