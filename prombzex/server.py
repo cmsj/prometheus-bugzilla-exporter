@@ -12,17 +12,17 @@ class BugzillaResource(Resource):
 
 class BZServer:
     """Our object for interacting with a Bugzilla server"""
-    def __init__(self, url, config):
+    def __init__(self, base_url, config):
         self.config = config
-        data = self.config.server(url)
+        data = self.config.server(base_url)
 
         self.name = data["name"]
-        self.url = url
+        self.base_url = base_url
         self.api_key = data["api_key"]
         self.queries = data["queries"]
 
         self.bugzilla = API(
-            api_root_url=self.url,
+            api_root_url=self.base_url,
             params={"api_key": self.api_key},
             json_encode_body=True,
             timeout=self.config.get("timeout"),
