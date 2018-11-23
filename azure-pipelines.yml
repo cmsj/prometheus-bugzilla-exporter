@@ -30,6 +30,11 @@ jobs:
       pytest tests --doctest-modules --junitxml=junit/test-results.xml
     displayName: 'pytest'
 
+  - script: |
+      pip install flake8
+      flake8 .
+    displayName: 'flake8'
+
   - task: PublishTestResults@2
     inputs:
       testResultsFiles: '**/test-results.xml'
