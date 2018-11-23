@@ -1,0 +1,8 @@
+{
+    "https://bugzilla.test.corp": {
+        "name": "Missing API Key Server",
+        "api_key": "987654321",
+        "timeout": "657483",
+        "queries": []
+    }
+}

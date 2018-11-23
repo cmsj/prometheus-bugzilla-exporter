@@ -8,5 +8,8 @@
 /*.egg-info
 /*.egg
 
+.coverage
+**/*.swp
+
 # Testing config file
 config.json
