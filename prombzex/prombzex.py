@@ -7,8 +7,8 @@ class PromBZEx:
     """Main class"""
     config = None
 
-    def __init__(self, configpath):
-        self.config = config.PromBZExConfig(configpath)
+    def __init__(self, config_file):
+        self.config = config.PromBZExConfig(config_file)
 
     def config_get(self, key, server_name=None, allow_default=True):
         """Return a config item"""

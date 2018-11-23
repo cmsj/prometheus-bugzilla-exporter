@@ -10,10 +10,9 @@ class PromBZExConfig:
 
     data = None
 
-    def __init__(self, config_path):
+    def __init__(self, config_file_object):
         """Initialise the class and load the config"""
-        with open(config_path, 'r') as filep:
-            self.data = json.load(filep)
+        self.data = json.load(config_file_object)
 
     def servers(self):
         """Return a list of configured BZ servers"""

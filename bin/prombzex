@@ -17,7 +17,8 @@ def main():
         sys.exit(1)
 
     output = ""
-    bzex = prombzex.PromBZEx(sys.argv[1])
+    with open(sys.argv[1], 'r') as config_file:
+        bzex = prombzex.PromBZEx(config_file)
     for server in bzex.servers():
         bzserver = bzex.server(server)
 
