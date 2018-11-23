@@ -1,4 +1,6 @@
 """Main class for PromBZEx"""
+import os
+
 from . import config
 from . import server
 
@@ -21,3 +23,13 @@ class PromBZEx:
     def server(self, name):
         """Return an instance of BZServer"""
         return server.BZServer(name, self.config)
+
+    def write(self, output, server_name=None):
+        """Write output to a Prometheus file, possibly per-server"""
+        filename = "bugzilla.prom"
+        if server_name:
+            filename = self.config_get('output_file', server_name)
+
+        outfile = os.path.join(self.config_get('output_dir'), filename)
+        with open(outfile, 'w') as filep:
+            filep.write(output)

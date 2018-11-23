@@ -70,3 +70,45 @@ def test_server_query_simple_counter(monkeypatch):
 # TYPE simple_counter_test counter
 simple_counter_test 2
 """
+
+
+def test_server_fail(monkeypatch):
+    def mock_search_return(params=None):
+        return Response(status_code=401,
+                        url='',
+                        method='GET',
+                        headers={},
+                        client_response=None,
+                        body={})
+
+    with open('tests/config-one-server-one-query.json', 'r') as filep:
+        bz = PromBZEx(filep)
+        server = bz.server(bz.servers()[0])
+        monkeypatch.setattr(server.bugzilla.bz, 'search', mock_search_return)
+        with pytest.raises(ValueError):
+            server.run_query('simple_counter_test')
+
+
+def test_output_writing(monkeypatch):
+    import os
+    import tempfile
+    tempp, tmp_output_filename = tempfile.mkstemp()
+
+    def mock_path_join(path, *paths):
+        return tmp_output_filename
+
+    with open('tests/config-one-server-one-query.json', 'r') as filep:
+        bz = PromBZEx(filep)
+    assert isinstance(bz, PromBZEx)
+
+    test_output = "test1234"
+    with monkeypatch.context() as m:
+        m.setattr(os.path, 'join', mock_path_join)
+        bz.write(test_output)
+        bz.write(test_output, bz.servers()[0])
+
+    with open(tmp_output_filename, 'r') as outp:
+        written_output = outp.read()
+
+    assert written_output == test_output
+    os.remove(tmp_output_filename)

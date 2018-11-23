@@ -20,12 +20,24 @@ def main():
     with open(sys.argv[1], 'r') as config_file:
         bzex = prombzex.PromBZEx(config_file)
     for server in bzex.servers():
+        server_output = ""
         bzserver = bzex.server(server)
 
         for query in bzserver.query_names():
             print("Running: %s..." % query)
-            output += bzserver.run_query(query)
+            server_output += bzserver.run_query(query)
 
+        if not bzex.config_get('output_file', server, False):
+            # Server has no output_file defined, so lump it in the global values
+            output += server_output
+        else:
+            # Write server-specific output
+            print(server_output)
+            bzex.write(server_output, server=server)
+
+    # Write global output if there is any
+    if output != "":
+        bzex.write(output)
     print(output)
 
 
