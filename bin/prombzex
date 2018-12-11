@@ -28,12 +28,12 @@ def main():
             server_output += bzserver.run_query(query)
 
         if not bzex.config_get('output_file', server, False):
-            # Server has no output_file defined, so lump it in the global values
+            # Server has no output_file defined, so lump it in the global text
             output += server_output
         else:
             # Write server-specific output
             print(server_output)
-            bzex.write(server_output, server=server)
+            bzex.write(server_output, server_name=server)
 
     # Write global output if there is any
     if output != "":
