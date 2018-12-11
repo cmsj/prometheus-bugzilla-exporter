@@ -32,7 +32,6 @@ def main():
             output += server_output
         else:
             # Write server-specific output
-            print(server_output)
             bzex.write(server_output, server_name=server)
 
     # Write global output if there is any
