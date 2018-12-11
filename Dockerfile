@@ -1,8 +1,10 @@
 FROM python:alpine3.7
 
-ADD requirements.txt /
-RUN pip install prombzex
+ADD . /prombzex
+WORKDIR /prombzex
+
 RUN pip install -r requirements.txt
+RUN pip install .
 
 VOLUME ["/config.json", "/outdir"]
 
