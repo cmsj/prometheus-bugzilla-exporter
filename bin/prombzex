@@ -24,7 +24,7 @@ def main():
         bzserver = bzex.server(server)
 
         for query in bzserver.query_names():
-            print("Running: %s..." % query)
+            print("Running: %s::%s..." % (server, query))
             server_output += bzserver.run_query(query)
 
         if not bzex.config_get('output_file', server, False):
@@ -38,7 +38,6 @@ def main():
     # Write global output if there is any
     if output != "":
         bzex.write(output)
-    print(output)
 
 
 if __name__ == '__main__':
