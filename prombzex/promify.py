@@ -12,15 +12,15 @@ class Promify:
 
     def promify(self):
         """Dispatch the correct formatting function"""
+        # NOTE: We might need to be more picky here based on self.query['type']
+        # but for now everything is just a count of matching data
         if 'group_field' in self.query:
-            if self.query['type'] == 'gauge':
-                return self.promify_grouped_gauge()
+            return self.promify_grouped_count()
         else:
-            if self.query['type'] == 'counter':
-                return self.promify_counter()
+            return self.promify_count()
         raise ValueError
 
-    def promify_grouped_gauge(self):
+    def promify_grouped_count(self):
         """Guages of grouped data"""
         group_field = self.query['group_field']
         counts = {}
@@ -36,7 +36,7 @@ class Promify:
 
         return self.output
 
-    def promify_counter(self):
+    def promify_count(self):
         """Simple counter"""
         count = len(self.data)
         self.output += f"""{self.query['name']} {count}

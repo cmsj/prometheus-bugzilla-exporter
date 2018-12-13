@@ -13,4 +13,4 @@
 **/*.swp
 
 # Testing config file
-config.json
+config*.json

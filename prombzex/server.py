@@ -1,4 +1,6 @@
 """Scaffolding to expose the Bugzilla REST API nicely"""
+import urllib.parse
+
 from simple_rest_client.api import API
 from simple_rest_client.resource import Resource
 
@@ -46,9 +48,15 @@ class BZServer:
             raise KeyError
 
         params = {}
-        for param in query_data["params"]:
-            params[param["key"]] = param["value"]
+        if "params" in query_data:
+            for param in query_data["params"]:
+                params[param["key"]] = param["value"]
+        elif "query" in query_data:
+            url_parts = urllib.parse.urlparse(query_data["query"])
+            params = urllib.parse.parse_qs(url_parts.query)
         response = self.bugzilla.bz.search(params=params)
+        # print(response.status_code)
+        # print(response.url)
 
         if response.status_code != 200:
             raise ValueError(response.body)
