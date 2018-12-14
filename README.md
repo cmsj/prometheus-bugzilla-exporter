@@ -64,7 +64,7 @@ The file should look like this:
                 "query": "https://bugzilla.someproject.org/buglist.cgi?bug_status=__closed__&email1=MYEMAIL%40SOMRPROJECT.ORG&emailassigned_to1=1&emailtype1=substring&list_id=9810932&query_format=advanced"
             }
         ]
-    }
+    },
     "https://bugzilla.othergroup.net": {
         "output_file": "othergroup.prom",
         "name": "Other Group",
