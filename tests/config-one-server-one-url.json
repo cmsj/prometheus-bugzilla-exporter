@@ -1,0 +1,15 @@
+{
+    "https://bugzilla.test.corp": {
+        "name": "Missing API Key Server",
+        "api_key": "987654321",
+        "timeout": "657483",
+        "queries": [
+            {
+                "name": "simple_counter_test",
+                "type": "counter",
+                "help": "Help for simple_counter_test",
+                "query": "https://bugzilla.somecorp.com/buglist.cgi?test1=test2"
+            }
+        ]
+    }
+}
