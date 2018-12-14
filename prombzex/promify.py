@@ -18,7 +18,6 @@ class Promify:
             return self.promify_grouped_count()
         else:
             return self.promify_count()
-        raise ValueError
 
     def promify_grouped_count(self):
         """Guages of grouped data"""
