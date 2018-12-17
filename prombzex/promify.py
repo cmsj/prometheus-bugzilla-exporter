@@ -16,18 +16,20 @@ class Promify:
         # but for now everything is just a count of matching data
         if 'group_field' in self.query:
             return self.promify_grouped_count()
-        else:
-            return self.promify_count()
+        return self.promify_count()
 
     def promify_grouped_count(self):
         """Guages of grouped data"""
         group_field = self.query['group_field']
         counts = {}
         for item in self.data:
-            if not item[group_field] in counts:
-                counts[item[group_field]] = 1
+            bit = item[group_field]
+            if isinstance(bit, list):
+                bit = bit[0]
+            if bit not in counts:
+                counts[bit] = 1
             else:
-                counts[item[group_field]] += 1
+                counts[bit] += 1
 
         for field in counts.keys():
             self.output += f"""{self.query['name']}{{{group_field}="{field}"}} {counts[field]}

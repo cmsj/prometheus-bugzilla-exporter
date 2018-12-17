@@ -54,6 +54,10 @@ class BZServer:
         elif "query" in query_data:
             url_parts = urllib.parse.urlparse(query_data["query"])
             params = urllib.parse.parse_qs(url_parts.query)
+            if "columnlist" in params:
+                include_fields = [x for x in params["columnlist"][0].split(',')]
+                del(params["columnlist"])
+                params["include_fields"] = include_fields
         response = self.bugzilla.bz.search(params=params)
         # print(response.status_code)
         # print(response.url)
