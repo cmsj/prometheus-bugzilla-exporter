@@ -16,6 +16,12 @@ class Promify:
         # but for now everything is just a count of matching data
         if 'group_field' in self.query:
             return self.promify_grouped_count()
+        if 'avg_field' in self.query:
+            return self.promify_avg()
+        if 'sum_field' in self.query:
+            return self.promify_sum()
+        if 'max_field' in self.query:
+            return self.promify_max()
         return self.promify_count()
 
     def promify_grouped_count(self):
@@ -43,3 +49,32 @@ class Promify:
         self.output += f"""{self.query['name']} {count}
 """
         return self.output
+
+    def promify_avg(self):
+        """Average a field in the results"""
+        avg_field = self.query['avg_field']
+        count = len(self.data)
+        sum = 0
+        for item in self.data:
+            sum += int(item[avg_field])
+        avg = sum / count
+        self.output += f"""{self.query['name']} {avg}
+"""
+
+    def promify_sum(self):
+        """Sum a field in the results"""
+        sum_field = self.query['sum_field']
+        sum = 0
+        for item in self.data:
+            sum += int(item[avg_field])
+        self.output += f"""{self.query['name']} {sum}
+"""
+
+    def promify_max(self):
+        """Find the maximum value of a field in the results"""
+        max_field = self.query['max_field']
+        max_val = 0
+        for item in self.data:
+            max_val = max(max_val, int(item[max_field])
+        self.output += f"""{self.query['name']} {max_val}
+"""
