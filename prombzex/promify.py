@@ -60,6 +60,7 @@ class Promify:
         avg = sum_val / count
         self.output += f"""{self.query['name']} {avg}
 """
+        return self.output
 
     def promify_sum(self):
         """Sum a field in the results"""
@@ -69,6 +70,7 @@ class Promify:
             sum_val += int(item[sum_field])
         self.output += f"""{self.query['name']} {sum}
 """
+        return self.output
 
     def promify_max(self):
         """Find the maximum value of a field in the results"""
@@ -78,3 +80,4 @@ class Promify:
             max_val = max(max_val, int(item[max_field]))
         self.output += f"""{self.query['name']} {max_val}
 """
+        return self.output
