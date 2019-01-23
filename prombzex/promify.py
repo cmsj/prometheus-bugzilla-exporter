@@ -54,19 +54,19 @@ class Promify:
         """Average a field in the results"""
         avg_field = self.query['avg_field']
         count = len(self.data)
-        sum = 0
+        sum_val = 0
         for item in self.data:
-            sum += int(item[avg_field])
-        avg = sum / count
+            sum_val += int(item[avg_field])
+        avg = sum_val / count
         self.output += f"""{self.query['name']} {avg}
 """
 
     def promify_sum(self):
         """Sum a field in the results"""
         sum_field = self.query['sum_field']
-        sum = 0
+        sum_val = 0
         for item in self.data:
-            sum += int(item[avg_field])
+            sum_val += int(item[sum_field])
         self.output += f"""{self.query['name']} {sum}
 """
 
@@ -75,6 +75,6 @@ class Promify:
         max_field = self.query['max_field']
         max_val = 0
         for item in self.data:
-            max_val = max(max_val, int(item[max_field])
+            max_val = max(max_val, int(item[max_field]))
         self.output += f"""{self.query['name']} {max_val}
 """
