@@ -68,7 +68,7 @@ class Promify:
         sum_val = 0
         for item in self.data:
             sum_val += int(item[sum_field])
-        self.output += f"""{self.query['name']} {sum}
+        self.output += f"""{self.query['name']} {sum_val}
 """
         return self.output
 
